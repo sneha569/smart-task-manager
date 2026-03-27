@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Task Scheduler</title>
+    <style>
+        body { font-family: Arial; text-align: center; }
+        input, button { padding: 10px; margin: 5px; }
+        table { margin: auto; border-collapse: collapse; }
+        td, th { border: 1px solid black; padding: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Smart Student Task Scheduler</h2>
+
+<input id="task" placeholder="Enter task">
+<button onclick="addTask()">Add Task</button>
+<button onclick="generateSchedule()">Generate Timetable</button>
+
+<ul id="taskList"></ul>
+
+<h3>Daily Timetable</h3>
+<table id="timetable">
+    <tr>
+        <th>Time</th>
+        <th>Task</th>
+    </tr>
+</table>
+
+<script>
+let tasks = [];
+
+function addTask() {
+    let task = document.getElementById("task").value;
+
+    if(task === "") {
+        alert("Enter task");
+        return;
+    }
+
+    tasks.push(task);
+
+    let li = document.createElement("li");
+    li.textContent = task;
+    document.getElementById("taskList").appendChild(li);
+
+    document.getElementById("task").value = "";
+}
+
+function generateSchedule() {
+    let table = document.getElementById("timetable");
+
+    // clear old rows
+    table.innerHTML = "<tr><th>Time</th><th>Task</th></tr>";
+
+    let startHour = 9; // start at 9 AM
+
+    tasks.forEach((task, index) => {
+        let row = table.insertRow();
+
+        let timeCell = row.insertCell(0);
+        let taskCell = row.insertCell(1);
+
+        let hour = startHour + index;
+        timeCell.textContent = hour + ":00 - " + (hour+1) + ":00";
+        taskCell.textContent = task;
+    });
+}
+</script>
+
+</body>
+</html>
